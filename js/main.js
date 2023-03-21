@@ -24,7 +24,7 @@
 
 
 function saveComments() {
-    // const userName = document.
+    const userName = document.getElementById('user-name');
 }
 
 const saveBtn = document.getElementById('comment-save');
