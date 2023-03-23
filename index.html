@@ -5,29 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <link rel="stylesheet" type="text/css" href="./style/style.css" />
 </head>
 <body>
 
     <section class="create-testimonials">
-        <input type="text" placeholder="Your name" id="user-name" />
+        <div>
+            <label><input type="text" placeholder="Your name" id="user-name" /></label>
+        </div>
         <div class="error error-name">Введите имя</div>
 
-        <textarea placeholder="Your text" id='comment-text'></textarea>
+        <div>
+            <label>
+                <textarea placeholder="Your text" id='comment-text'></textarea>
+            </label>
+        </div>
         <div class="error error-comment">Введите ваш комментарий</div>
 
         <button id="comment-save">Save</button>
     </section>
 
-    <div id="show-comments">
+    <section id="show-comments">
 
-    </div>
-
-
+    </section>
 
 
 
-    <script src="js/main.js"></script>
+
+
+    <script src="./js/main.js"></script>
 
 </body>
 </html>
