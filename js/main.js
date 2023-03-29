@@ -24,26 +24,30 @@ let comments = [];
 function saveComments() {
 
     const userName = document.getElementById('user-name');
+    const userSurname = document.getElementById('user-surname');
     const commentText = document.getElementById('comment-text');
 
     const userNameValue = userName.value;
+    const userSurnameValue = userSurname.value
     const commentTextValue = commentText.value;
 
-    const isHasError = checkErrors(userNameValue, commentTextValue);
+    const isHasError = checkErrors(userNameValue, userSurnameValue, commentTextValue);
     if (isHasError) return;
 
-    const newComment = createComment(userNameValue, commentTextValue);
+    const newComment = createComment(userNameValue, userSurnameValue, commentTextValue);
 
     comments.push(newComment);
     userName.value = '';
+    userSurname.value = '';
     commentText.value = '';
 
     renderComments();
 }
 
-const createComment = (useName, comment) => {
+const createComment = (useName, useSurname, comment) => {
     return {
         'useName': useName.trim(),
+        'useSurname' : useSurname.trim(),
         'comment': comment.trim(),
         date: new Date(),
         }
@@ -58,7 +62,7 @@ const renderComments = () => {
     for(let i = 0; i < comments.length; i++) {
 
         allComments += `<article>
-                    <h4>${comments[i].useName}</h4>
+                    <h4>${comments[i].useName} ${comments[i].useSurname}</h4>
                     <span>${comments[i].date}</span>
                     <div>${comments[i].comment}</div>
                 </article>`;
@@ -68,25 +72,26 @@ const renderComments = () => {
 
 }
 
-const checkErrors = (userNameValue, commentTextValue) => {
+const checkErrors = (userNameValue, userSurnameValue, commentTextValue) => {
+    
+    let showErr = document.querySelectorAll('.error');
+    
+          showErr.forEach(function(showErr, index) {
 
-    const showErrName = document.querySelector('.error-name');
-    const showErrComment = document.querySelector('.error-comment');
-
-    showErrName.classList.remove('show-error');
-    showErrComment.classList.remove('show-error');
-
-    if (userNameValue.length == 0) {
-        showErrName.classList.add('show-error');
-    }
-    if (commentTextValue.length == 0) {
-        showErrComment.classList.add('show-error');
-    }
-
-   return userNameValue.length == 0 || commentTextValue.length == 0;
-};
-
+            showErr.classList.remove('show-error');
+            
+            if (userNameValue.length == 0 && index === 0) {
+                showErr.classList.add('show-error');
+            }
+            if (userSurnameValue.length == 0 && index === 1) {
+                showErr.classList.add('show-error');
+            }
+            if (commentTextValue.length == 0 && index === 2) {
+                showErr.classList.add('show-error');
+            }
+            return
+        })
+ };
 
 const saveBtn = document.getElementById('comment-save');
-saveBtn.addEventListener('click', saveComments)
-
+saveBtn.addEventListener('click', saveComments);
