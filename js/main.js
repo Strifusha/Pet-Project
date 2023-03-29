@@ -23,23 +23,22 @@ let comments = [];
 
 function saveComments() {
 
-    const userName = document.getElementById('user-name');
-    const userSurname = document.getElementById('user-surname');
-    const commentText = document.getElementById('comment-text');
+    const allFields = document.getElementsByClassName('field');
 
     const userNameValue = userName.value;
     const userSurnameValue = userSurname.value
     const commentTextValue = commentText.value;
 
-    const isHasError = checkErrors(userNameValue, userSurnameValue, commentTextValue);
-    if (isHasError) return;
+    checkErrors(allFields);
+
+    const isHasError =  document.querySelectorAll('.show-error');
+    console.log('isHasError--> ', isHasError);
+    if (isHasError.length) return;
 
     const newComment = createComment(userNameValue, userSurnameValue, commentTextValue);
 
     comments.push(newComment);
-    userName.value = '';
-    userSurname.value = '';
-    commentText.value = '';
+    userName.value = ''; // need refactoring
 
     renderComments();
 }
@@ -72,25 +71,16 @@ const renderComments = () => {
 
 }
 
-const checkErrors = (userNameValue, userSurnameValue, commentTextValue) => {
+const checkErrors = (allFields) => { 
     
-    let showErr = document.querySelectorAll('.error');
-    
-          showErr.forEach(function(showErr, index) {
+    for(let i = 0; allFields.length > i; i++) {
+        console.log('allFields[i]--> ', allFields[i]);
+        if(allFields[i].value == '') {
+           
+            // allFields[i].nextSibling.classList.add('show-error');
+        }
+    }
 
-            showErr.classList.remove('show-error');
-            
-            if (userNameValue.length == 0 && index === 0) {
-                showErr.classList.add('show-error');
-            }
-            if (userSurnameValue.length == 0 && index === 1) {
-                showErr.classList.add('show-error');
-            }
-            if (commentTextValue.length == 0 && index === 2) {
-                showErr.classList.add('show-error');
-            }
-            return
-        })
  };
 
 const saveBtn = document.getElementById('comment-save');
