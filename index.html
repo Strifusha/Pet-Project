@@ -12,24 +12,27 @@
     <section class="create-testimonials">
         <div>
             <label>
-                <input type="text" placeholder="Your name" id="user-name">
+                <input type="text" placeholder="Your name" id="user-name" class="field">
+                <span class="error">Введите имя</span>
             </label>
+            
         </div>
-        <div class="error error-name">Введите имя</div>
 
         <div>
             <label>
-                <input type="text" placeholder="Your surname" id="user-surname">
+                <input type="text" placeholder="Your surname" id="user-surname" class="field">
+                <span class="error">Введите фамилию</span>
             </label>
+            
         </div>
-        <div class="error error-surname">Введите фамилию</div>
 
         <div>
             <label>
-                <textarea placeholder="Your text" id='comment-text'></textarea>
+                <textarea placeholder="Your text" id='comment-text' class="field"></textarea>
+                <span class="error">Введите ваш комментарий</span>
             </label>
+            
         </div>
-        <div class="error error-comment">Введите ваш комментарий</div>
 
         <button id="comment-save">Save</button>
     </section>
