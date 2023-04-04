@@ -14,9 +14,9 @@ let comments = [];
 function saveComments() {
     const allFields = document.getElementsByClassName('field');
     
-    let userName;
-    let userSurname;
-    let userComment; 
+    let userName = '';
+    let userSurname = '';
+    let userComment = ''; 
 
     let showErrors = () =>{
         for (let i = 0; i < allFields.length; i++) {
@@ -56,8 +56,8 @@ function saveComments() {
             let allComments = '';
             for(let i = 0; i < comments.length; i++) {
             allComments += `<article>
-                            <h3>${comments[i].usName} ${comments[i].surname}</h3>
-                            <span>${comments[i].date}</span>
+                            <h3 class='h3-name'>${comments[i].usName} ${comments[i].surname}</h3>
+                            <span clas='date'>${comments[i].date}</span>
                             <div class='div-comment'>${comments[i].comment}</div>
                             </article>`;
         }       

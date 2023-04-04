@@ -56,11 +56,12 @@ button:hover {
     margin-bottom: 20px;
 }
 
-h3, span {
+.date {
     margin: 25px 20px;
 }
 
-h3 {
+.h3-name {
+    margin: 25px 20px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     
 }
