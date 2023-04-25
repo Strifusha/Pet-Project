@@ -1,3 +1,7 @@
+body{
+    background-color: rgb(220, 234, 220);
+}
+
 .error {
     display: none;
     color: red;
@@ -13,7 +17,8 @@ input {
     border-radius: 5px;
     width: 30%;
     padding: 10px;
-    margin: 20px;
+    margin: 15px;
+    box-shadow: 10px 5px 5px grey;
 }
 input:hover {
     background-color: antiquewhite;
@@ -25,6 +30,7 @@ textarea {
     height: 40%;
     padding: 10px;
     margin: 20px;
+    box-shadow: 10px 5px 5px grey;
 }
 textarea:hover {
     background-color:antiquewhite;
@@ -42,17 +48,26 @@ button:hover {
      background-color:antiquewhite;
 }
 
-p {
-    margin: 30px 20px;
-    font-size: 20px;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    
-}
-
 #create-testimonials {
     width: 600px;
     margin: 0 auto;
     border: 1px solid #ccc;
     border-radius: 15px;
     margin-bottom: 20px;
+}
+
+.date {
+    margin: 25px 20px;
+}
+
+.h3-name {
+    margin: 25px 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
+}
+
+.div-comment {
+    margin: 20px;
+    font-size: 20px;
+    border-bottom: dashed;
 }
