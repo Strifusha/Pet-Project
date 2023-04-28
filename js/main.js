@@ -1,3 +1,10 @@
+// 1поулчить текст с инпута
+    //1.1навесить слушатель
+// Сравнить текст с заголовками
+    // Пройтись по масиву и сравнить заголвок с текстом 
+    // Отфильтровать по совпадению 
+            
+
 let comments = [];
 let allComments = '';
 
@@ -7,41 +14,40 @@ const getAllComments = document.getElementsByClassName('h3-name');
 const getArticle = document.getElementsByClassName('article')
 
 
-getSearchInput.addEventListener('keyup', getAllTitles);
+getSearchInput.addEventListener('keyup', filteredBySearch);
 getComments();
 
-function getAllTitles(){
+function filteredBySearch(){
+    let searchValue = getSearchInput.value;
 
-        let searchValue = getSearchInput.value;
-        let arrTitles = []
-        let commentsText = ''
+    let filteredArr = comments.filter((comment) => {
+        return comment.title.match(searchValue)
+    });
 
-        for(let i = 0; i < getAllComments.length; i++){
-            commentsText = getAllComments[i].textContent;
-            arrTitles.push(commentsText) 
-        } 
+    console.log('filteredArr--> ', filteredArr)
+    getCommentSection.innerHTML = '';
+    renderComments(filteredArr);
+      
         
-        //let filteredArr = arrTitles.filter(word => word.includes(searchValue));
-        
-        showNoMatches = () => {
+        // showNoMatches = () => {
             
-            for(let i = 0; i < arrTitles.length; i++){ 
+        //     for(let i = 0; i < arrTitles.length; i++){ 
 
-                getArticle[i].classList.add('closed-article');
-                const elementsClosedClass = document.querySelectorAll('.closed-article');
+        //         getArticle[i].classList.add('closed-article');
+        //         const elementsClosedClass = document.querySelectorAll('.closed-article');
 
-                getSearchInput.nextElementSibling.classList.remove('show-error')
+        //         getSearchInput.nextElementSibling.classList.remove('show-error')
              
-                if(arrTitles[i].match(searchValue)){
-                    getArticle[i].classList.remove('closed-article');    
-                } 
+        //         if(arrTitles[i].match(searchValue)){
+        //             getArticle[i].classList.remove('closed-article');    
+        //         } 
 
-                if(elementsClosedClass.length == getArticle.length){
-                    getSearchInput.nextElementSibling.classList.add('show-error')  
-                }  
-            } 
-        }
-        showNoMatches();            
+        //         if(elementsClosedClass.length == getArticle.length){
+        //             getSearchInput.nextElementSibling.classList.add('show-error')  
+        //         }  
+        //     } 
+        // }
+        // showNoMatches();            
 }
 
 
@@ -67,22 +73,27 @@ function getComments(){
         .then(responseStatus)
         .then(json)
         .then(function(data){
-            comments.push(data)
-                
-            for(let i = 0; i < data.length; i++){
-                allComments += `<article class='article'>
-                <h3 class='h3-name'>${data[i].title}</h3>
-                <span class='date'>${getDate()}</span>
-                <div class='div-comment'>${data[i].body}</div>
-                </article>`; 
-            }
-            getCommentSection.innerHTML = allComments; 
+            comments.push(...data)
+            renderComments(comments);
+            
         })
         .catch(function(error){
             console.log('error-->', error)
         })
 }
-    
+
+function renderComments(renderComments) {
+   
+    for(let i = 0; i < renderComments.length; i++){
+        allComments += `<article class='article'>${i}
+        <h3 class='h3-name'>${renderComments[i].title}</h3>
+        <span class='date'>${getDate()}</span>
+        <div class='div-comment'>${renderComments[i].body}</div>
+        </article>`; 
+    }
+    getCommentSection.innerHTML = allComments; 
+}
+
 /////////////////////////////////////////////////
 function saveComments() {
     const allFields = document.getElementsByClassName('field');
