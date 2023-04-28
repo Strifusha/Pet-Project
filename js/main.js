@@ -24,11 +24,12 @@ function getAllTitles(){
         //let filteredArr = arrTitles.filter(word => word.includes(searchValue));
         
         showNoMatches = () => {
-            const elementsClosedClass = document.querySelectorAll('.closed-article');
-        
+            
             for(let i = 0; i < arrTitles.length; i++){ 
 
                 getArticle[i].classList.add('closed-article');
+                const elementsClosedClass = document.querySelectorAll('.closed-article');
+
                 getSearchInput.nextElementSibling.classList.remove('show-error')
              
                 if(arrTitles[i].match(searchValue)){
@@ -36,14 +37,11 @@ function getAllTitles(){
                 } 
 
                 if(elementsClosedClass.length == getArticle.length){
-                    getSearchInput.nextElementSibling.classList.add('show-error')
-                    //console.log('no matches');  
+                    getSearchInput.nextElementSibling.classList.add('show-error')  
                 }  
             } 
-        
         }
-        showNoMatches();
-             
+        showNoMatches();            
 }
 
 
@@ -77,7 +75,6 @@ function getComments(){
                 <span class='date'>${getDate()}</span>
                 <div class='div-comment'>${data[i].body}</div>
                 </article>`; 
-         
             }
             getCommentSection.innerHTML = allComments; 
         })
