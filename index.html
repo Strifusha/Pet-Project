@@ -16,7 +16,7 @@
                 <input type="text" placeholder="Your title" id="user-title" class="field">
                 <span class="error">Введите заголовок</span>
             </label>
-
+            
         </div>
 
         <div>
@@ -24,14 +24,22 @@
                 <textarea placeholder="Your text" id="comment-text" class="field"></textarea>
                 <span class="error">Введите ваш комментарий</span>
             </label>
-
+            
         </div>
 
         <button id="comment-save">Save</button>
     </section>
 
-    <section id="show-comments">
+    <div class="search-block">
+        <input type="search" id="search" placeholder="Enter your title for searching">
+        <h4 id="no-matches">No Matches!</h4>
+        <select>
+            <option value="up">По дате публикации &#9660;</option>
+            <option value="down">По дате публикации &#9650;</option>
+        </select>
+    </div>
 
+    <section id="show-comments">    
     </section>
 
 

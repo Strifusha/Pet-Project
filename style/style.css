@@ -1,5 +1,8 @@
 body{
-    background-color: rgb(220, 234, 220);
+    background-color: rgb(177, 232, 239);
+    margin: auto; 
+    width: 70%; 
+    padding: 20px;
 }
 
 .error {
@@ -18,7 +21,7 @@ input {
     width: 30%;
     padding: 10px;
     margin: 15px;
-    box-shadow: 10px 5px 5px grey;
+    box-shadow: 10px 5px 5px rgb(173, 173, 173);
 }
 input:hover {
     background-color: antiquewhite;
@@ -26,11 +29,11 @@ input:hover {
 
 textarea {
     border-radius: 5px;
-    width: 60%;
+    width: 30%;
     height: 40%;
     padding: 10px;
     margin: 20px;
-    box-shadow: 10px 5px 5px grey;
+    box-shadow: 10px 5px 5px rgb(173, 173, 173);
 }
 textarea:hover {
     background-color:antiquewhite;
@@ -50,24 +53,30 @@ button:hover {
 
 #create-testimonials {
     width: 600px;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    margin-bottom: 20px;
 }
 
 .date {
-    margin: 25px 20px;
+    margin: 20px;
 }
 
 .h3-name {
-    margin: 25px 20px;
+    padding-top: 10px;
+    margin: 20px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    
 }
 
 .div-comment {
     margin: 20px;
     font-size: 20px;
-    border-bottom: dashed;
+    padding-bottom: 10px;  
+}
+
+article {
+    background-color:rgb(234, 253, 247);
+    border-radius:10px;
+    box-shadow: 10px 5px 5px rgb(173, 173, 173);
+}
+
+.closed-article {
+    display: none;
 }
