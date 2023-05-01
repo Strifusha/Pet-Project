@@ -10,8 +10,7 @@ let allComments = '';
 
 const getCommentSection = document.getElementById('show-comments');
 const getSearchInput = document.getElementById('search');
-const getAllComments = document.getElementsByClassName('h3-name');
-const getArticle = document.getElementsByClassName('article')
+const getArticle = document.getElementsByTagName('article');
 
 
 getSearchInput.addEventListener('keyup', filteredBySearch);
@@ -19,35 +18,20 @@ getComments();
 
 function filteredBySearch(){
     let searchValue = getSearchInput.value;
-
+    
     let filteredArr = comments.filter((comment) => {
         return comment.title.match(searchValue)
     });
 
-    console.log('filteredArr--> ', filteredArr)
+    let showNoMatches = document.getElementById('no-matches');
+    showNoMatches.classList.remove('show-error');
+
+    if (filteredArr.length === 0){
+        showNoMatches.classList.add('show-error');
+    }
+
     getCommentSection.innerHTML = '';
-    renderComments(filteredArr);
-      
-        
-        // showNoMatches = () => {
-            
-        //     for(let i = 0; i < arrTitles.length; i++){ 
-
-        //         getArticle[i].classList.add('closed-article');
-        //         const elementsClosedClass = document.querySelectorAll('.closed-article');
-
-        //         getSearchInput.nextElementSibling.classList.remove('show-error')
-             
-        //         if(arrTitles[i].match(searchValue)){
-        //             getArticle[i].classList.remove('closed-article');    
-        //         } 
-
-        //         if(elementsClosedClass.length == getArticle.length){
-        //             getSearchInput.nextElementSibling.classList.add('show-error')  
-        //         }  
-        //     } 
-        // }
-        // showNoMatches();            
+    renderComments(filteredArr);          
 }
 
 
@@ -55,7 +39,17 @@ function getDate(){
     const months = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"]; 
     let myDate = new Date();
-    return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + myDate.getHours() + ":" + myDate.getMinutes();
+    let hours = myDate.getHours();
+    let randomMinute = Math.floor(Math.random() * 60);
+
+    if(hours < 10){
+        hours = '0' + hours;
+    }
+    if(randomMinute < 10){
+        randomMinute = '0' + randomMinute;
+    }
+    
+    return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + myDate.getHours() + ":" + randomMinute;
 }
 
 function responseStatus(response){
@@ -85,13 +79,15 @@ function getComments(){
 function renderComments(renderComments) {
    
     for(let i = 0; i < renderComments.length; i++){
-        allComments += `<article class='article'>${i}
-        <h3 class='h3-name'>${renderComments[i].title}</h3>
+    
+        allComments = `<article>
+        <h3 class='titleName'>${renderComments[i].title}</h3>
         <span class='date'>${getDate()}</span>
         <div class='div-comment'>${renderComments[i].body}</div>
         </article>`; 
+        getCommentSection.innerHTML += allComments; 
     }
-    getCommentSection.innerHTML = allComments; 
+    
 }
 
 /////////////////////////////////////////////////
@@ -103,17 +99,20 @@ function saveComments() {
     let showErrors = () =>{
         
         for (let i = 0; i < allFields.length; i++) {
-             
-            if(allFields[i].value == '') {
-                allFields[i].nextElementSibling.classList.add('show-error'); 
-            } else {                  
+            
+            if(allFields[i].value !== ''){   
                 userName = allFields[0].value;
-                userComment = allFields[1].value;
-                allFields[i].nextElementSibling.classList.remove('show-error');                                       
-            }  
-            //  allFields[i].value = '';              
-        }     
-           
+                userComment = allFields[1].value;       
+                allFields[i].nextElementSibling.classList.remove('show-error');                                         
+            } 
+
+            if(allFields[i].value == '') {
+                allFields[i].nextElementSibling.classList.add('show-error');   
+            }          
+        }   
+         
+        // allFields.value = ''; 
+    
     }  
     showErrors();
 
@@ -134,8 +133,8 @@ function saveComments() {
     const showComment = () => {
         for(let i = 0; i < comments.length; i++) {
 
-            allComments = `<article class='article'>
-                            <h3 class='h3-name'>${comments[i].title}</h3>
+            allComments = `<article>
+                            <h3 class='titleName'>${comments[i].title}</h3>
                             <span class='date'>${getDate()}</span>
                             <div class='div-comment'>${comments[i].body}</div>
                             </article>`; 
