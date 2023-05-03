@@ -59,7 +59,7 @@ button:hover {
     margin: 20px;
 }
 
-.h3-name {
+.titleName {
     padding-top: 10px;
     margin: 20px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -75,8 +75,4 @@ article {
     background-color:rgb(234, 253, 247);
     border-radius:10px;
     box-shadow: 10px 5px 5px rgb(173, 173, 173);
-}
-
-.closed-article {
-    display: none;
 }
