@@ -5,6 +5,9 @@ const getCommentSection = document.getElementById('show-comments');
 const getSearchInput = document.getElementById('search');
 const getArticle = document.getElementsByTagName('article');
 
+const allDeleteButtons = document.getElementsByClassName('delete-comment');
+
+
 getSearchInput.addEventListener('keyup', filteredBySearch);
 getComments();
 
@@ -47,22 +50,22 @@ function filteredByDate(){
        }
 }
 
-function getDate(){
-    const months = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"]; 
-    let myDate = new Date();
-    let hours = myDate.getHours();
-    let minute = myDate.getMinutes();
+// function getDate(){
+//     const months = ["January", "February", "March", "April", "May", "June",
+//     "July", "August", "September", "October", "November", "December"]; 
+//     let myDate = new Date();
+//     let hours = myDate.getHours();
+//     let minute = myDate.getMinutes();
     
-    if(hours < 10){
-        hours = '0' + hours;
-    }
-    if(minute < 10){
-        minute = '0' + minute;
-    }
+//     if(hours < 10){
+//         hours = '0' + hours;
+//     }
+//     if(minute < 10){
+//         minute = '0' + minute;
+//     }
     
-    return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + hours + ":" + minute;
-}
+//     return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + hours + ":" + minute;
+// }
 
 function responseStatus(response){
     if(response.status !== 200){
@@ -76,10 +79,11 @@ function json(response){
 }
 
 function getComments(){
-    fetch('http://www.mocky.io/v2/5944e07213000038025b6f30')
+    fetch('https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0')
         .then(responseStatus)
         .then(json)
         .then(function(data){
+            console.log('data--> ', data)
             comments.push(...data)
             renderComments(comments);
             
@@ -95,8 +99,9 @@ function renderComments(renderComments) {
     
         allComments = `<article>
         <h3 class='titleName'>${renderComments[i].title}</h3>
-        <span class='date'>${getDate()}</span>
+        <span class='date'>${renderComments[i].time}</span>
         <div class='div-comment'>${renderComments[i].body}</div>
+        <button class='delete-comment' data-id='${renderComments[i].id}'>Delete</button>
         </article>`; 
         getCommentSection.innerHTML += allComments; 
     }
@@ -156,32 +161,33 @@ function saveComments() {
     showComment();
 }   
 
-comments.forEach((article) => {
-    console.log(article);})
+// comments.forEach((article) => {
+//     console.log(article);})
 
-function addDeleteBtn() {
-    //const getArticles = Array.from(getCommentSection.children);
-    //  console.log(getArticles);
+// function addDeleteBtn() {
+//     //const getArticles = Array.from(getCommentSection.children);
+//     //  console.log(getArticles);
 
-     comments.forEach((article) => {
-        //console.log(article);
-         //console.log(article.textContent);
+//      comments.forEach((article) => {
+//         //console.log(article);
+//          //console.log(article.textContent);
 
-        // let deleteBtn = document.createElement('button');
-        // deleteBtn.classList.add('delete-button');
-        // deleteBtn.textContent = 'Delete';
+//         // let deleteBtn = document.createElement('button');
+//         // deleteBtn.classList.add('delete-button');
+//         // deleteBtn.textContent = 'Delete';
         
-        // deleteBtn.addEventListener('click', () => {
-        //     article.remove();
-        // })
+//         // deleteBtn.addEventListener('click', () => {
+//         //     article.remove();
+//         // })
 
-        // article.appendChild(deleteBtn);
-     });
+//         // article.appendChild(deleteBtn);
+//      });
+
+//      renderComments()
 
 
-
-}
-addDeleteBtn()
-    const saveBtn = document.getElementById('comment-save');
-    saveBtn.addEventListener('click', saveComments);
+// }
+// addDeleteBtn()
+//     const saveBtn = document.getElementById('comment-save');
+//     saveBtn.addEventListener('click', saveComments);
     
