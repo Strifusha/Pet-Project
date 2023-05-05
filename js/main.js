@@ -1,17 +1,9 @@
-// 1поулчить текст с инпута
-    //1.1навесить слушатель
-// Сравнить текст с заголовками
-    // Пройтись по масиву и сравнить заголвок с текстом 
-    // Отфильтровать по совпадению 
-            
-
 let comments = [];
 let allComments = '';
 
 const getCommentSection = document.getElementById('show-comments');
 const getSearchInput = document.getElementById('search');
 const getArticle = document.getElementsByTagName('article');
-
 
 getSearchInput.addEventListener('keyup', filteredBySearch);
 getComments();
@@ -34,22 +26,42 @@ function filteredBySearch(){
     renderComments(filteredArr);          
 }
 
+const getSelectDate = document.getElementById('select-date');
+getSelectDate.addEventListener('change', filteredByDate);
+
+function filteredByDate(){
+    const getSelectDate = document.getElementById('select-date');
+    const selectedOption = getSelectDate.options[getSelectDate.selectedIndex];
+    
+        if(selectedOption.value === 'up'){
+            getCommentSection.innerHTML = '';
+            comments.reverse()
+            //old comments
+            renderComments(comments);
+        } 
+        if(selectedOption.value === 'down'){
+            //new comments
+            let rendered = comments.reverse();
+            getCommentSection.innerHTML = '';
+            renderComments(rendered);
+       }
+}
 
 function getDate(){
     const months = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"]; 
     let myDate = new Date();
     let hours = myDate.getHours();
-    let randomMinute = Math.floor(Math.random() * 60);
-
+    let minute = myDate.getMinutes();
+    
     if(hours < 10){
         hours = '0' + hours;
     }
-    if(randomMinute < 10){
-        randomMinute = '0' + randomMinute;
+    if(minute < 10){
+        minute = '0' + minute;
     }
     
-    return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + myDate.getHours() + ":" + randomMinute;
+    return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + hours + ":" + minute;
 }
 
 function responseStatus(response){
@@ -57,8 +69,9 @@ function responseStatus(response){
         return Promise.reject(new Error(response.statusText))
     }
     return Promise.resolve(response)
-};
-    function json(response){
+}
+
+function json(response){
     return response.json();
 }
 
@@ -90,7 +103,6 @@ function renderComments(renderComments) {
     
 }
 
-/////////////////////////////////////////////////
 function saveComments() {
     const allFields = document.getElementsByClassName('field');
     let userName = '';
@@ -144,6 +156,32 @@ function saveComments() {
     showComment();
 }   
 
+comments.forEach((article) => {
+    console.log(article);})
+
+function addDeleteBtn() {
+    //const getArticles = Array.from(getCommentSection.children);
+    //  console.log(getArticles);
+
+     comments.forEach((article) => {
+        //console.log(article);
+         //console.log(article.textContent);
+
+        // let deleteBtn = document.createElement('button');
+        // deleteBtn.classList.add('delete-button');
+        // deleteBtn.textContent = 'Delete';
+        
+        // deleteBtn.addEventListener('click', () => {
+        //     article.remove();
+        // })
+
+        // article.appendChild(deleteBtn);
+     });
+
+
+
+}
+addDeleteBtn()
     const saveBtn = document.getElementById('comment-save');
     saveBtn.addEventListener('click', saveComments);
     
