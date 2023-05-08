@@ -5,8 +5,6 @@ const getCommentSection = document.getElementById('show-comments');
 const getSearchInput = document.getElementById('search');
 const getArticle = document.getElementsByTagName('article');
 
-const allDeleteButtons = document.getElementsByClassName('delete-comment');
-
 
 getSearchInput.addEventListener('keyup', filteredBySearch);
 getComments();
@@ -33,39 +31,58 @@ const getSelectDate = document.getElementById('select-date');
 getSelectDate.addEventListener('change', filteredByDate);
 
 function filteredByDate(){
-    const getSelectDate = document.getElementById('select-date');
     const selectedOption = getSelectDate.options[getSelectDate.selectedIndex];
-    
+
+    comments.sort((a, b) => {
+        const [dayA, monthA, yearA] = a.time.split(".");
+        const [dayB, monthB, yearB] = b.time.split(".");
+      
+        const dateA = new Date(`${monthA}/${dayA}/${yearA}`);
+        const dateB = new Date(`${monthB}/${dayB}/${yearB}`);
+       
         if(selectedOption.value === 'up'){
-            getCommentSection.innerHTML = '';
-            comments.reverse()
             //old comments
-            renderComments(comments);
-        } 
+            getCommentSection.innerHTML = '';
+            return dateB - dateA;
+        }
         if(selectedOption.value === 'down'){
             //new comments
-            let rendered = comments.reverse();
             getCommentSection.innerHTML = '';
-            renderComments(rendered);
-       }
-}
+            return dateA - dateB;
+        }   
+    });
+    renderComments(comments);
+} 
 
-// function getDate(){
-//     const months = ["January", "February", "March", "April", "May", "June",
-//     "July", "August", "September", "October", "November", "December"]; 
-//     let myDate = new Date();
-//     let hours = myDate.getHours();
-//     let minute = myDate.getMinutes();
+function getDate(){
+    // const months = ["January", "February", "March", "April", "May", "June",
+    // "July", "August", "September", "October", "November", "December"]; 
+    let myDate = new Date();
+    let day = myDate.getDate();
+    let months = myDate.getMonth();
+    let year = myDate.getFullYear()
+    //let hours = myDate.getHours();
+    //let minute = myDate.getMinutes();
+    months = ++months;
+    if(day < 10){
+        day = '0' + day;
+    }
+
+    if(months < 10){
+        months = '0' + months;
+    }
     
-//     if(hours < 10){
-//         hours = '0' + hours;
-//     }
-//     if(minute < 10){
-//         minute = '0' + minute;
-//     }
+    // if(hours < 10){
+    //     hours = '0' + hours;
+    // }
+    // if(minute < 10){
+    //     minute = '0' + minute;
+    // }
     
-//     return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + hours + ":" + minute;
-// }
+    //return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + hours + ":" + minute;
+    return day + "." + months + "." + year;
+
+}
 
 function responseStatus(response){
     if(response.status !== 200){
@@ -83,7 +100,7 @@ function getComments(){
         .then(responseStatus)
         .then(json)
         .then(function(data){
-            console.log('data--> ', data)
+            // console.log('data--> ', data)
             comments.push(...data)
             renderComments(comments);
             
@@ -140,6 +157,7 @@ function saveComments() {
         return {
             'title': userName.trim(),
             'body': userComment.trim(),
+            'time': getDate(),
         }   
     }
 
@@ -154,6 +172,7 @@ function saveComments() {
                             <h3 class='titleName'>${comments[i].title}</h3>
                             <span class='date'>${getDate()}</span>
                             <div class='div-comment'>${comments[i].body}</div>
+                            <button class='delete-comment'>Delete</button>
                             </article>`; 
         }   
             getCommentSection.innerHTML += allComments;     
@@ -161,33 +180,22 @@ function saveComments() {
     showComment();
 }   
 
-// comments.forEach((article) => {
-//     console.log(article);})
 
-// function addDeleteBtn() {
-//     //const getArticles = Array.from(getCommentSection.children);
-//     //  console.log(getArticles);
-
-//      comments.forEach((article) => {
-//         //console.log(article);
-//          //console.log(article.textContent);
-
-//         // let deleteBtn = document.createElement('button');
-//         // deleteBtn.classList.add('delete-button');
-//         // deleteBtn.textContent = 'Delete';
-        
-//         // deleteBtn.addEventListener('click', () => {
-//         //     article.remove();
-//         // })
-
-//         // article.appendChild(deleteBtn);
-//      });
-
-//      renderComments()
+const allDeleteButtons = document.getElementsByClassName('delete-comment');
+//console.log(allDeleteButtons)
 
 
-// }
-// addDeleteBtn()
-//     const saveBtn = document.getElementById('comment-save');
-//     saveBtn.addEventListener('click', saveComments);
+ function deleteArticle() {
+   for (let i = 0; i < allDeleteButtons.length; i++){
+    console.log(i)
+   }
+   
+
+}
+
+//allDeleteButtons.addEventListener('click', deleteArticle);
+
+
+const saveBtn = document.getElementById('comment-save');
+saveBtn.addEventListener('click', saveComments);
     
