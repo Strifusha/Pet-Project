@@ -122,7 +122,17 @@ function renderComments(renderComments) {
         </article>`; 
         getCommentSection.innerHTML += allComments; 
     }
-    
+
+    const allDeleteButtons = document.getElementsByClassName('delete-comment');
+    console.log(allDeleteButtons)
+
+        for (let i = 0; i < allDeleteButtons.length; i++) {
+            allDeleteButtons[i].addEventListener("click", function() {
+                console.log('asdas')
+            });
+        
+        }    
+
 }
 
 function saveComments() {
@@ -164,36 +174,8 @@ function saveComments() {
     const newComment = createComment(userName, userComment)
     comments.push(newComment);
 
-
-    const showComment = () => {
-        for(let i = 0; i < comments.length; i++) {
-
-            allComments = `<article>
-                            <h3 class='titleName'>${comments[i].title}</h3>
-                            <span class='date'>${getDate()}</span>
-                            <div class='div-comment'>${comments[i].body}</div>
-                            <button class='delete-comment'>Delete</button>
-                            </article>`; 
-        }   
-            getCommentSection.innerHTML += allComments;     
-    }
-    showComment();
+    renderComments(comments)
 }   
-
-
-const allDeleteButtons = document.getElementsByClassName('delete-comment');
-//console.log(allDeleteButtons)
-
-
- function deleteArticle() {
-   for (let i = 0; i < allDeleteButtons.length; i++){
-    console.log(i)
-   }
-   
-
-}
-
-//allDeleteButtons.addEventListener('click', deleteArticle);
 
 
 const saveBtn = document.getElementById('comment-save');
