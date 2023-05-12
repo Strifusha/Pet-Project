@@ -124,24 +124,31 @@ function renderComments(renderComments) {
 function saveComments() {
     let userName = '';
     let userComment = ''; 
+    
+    const allFields = document.getElementsByClassName('field');
+    let commentInfo = {}
 
-    showErrors();
+    for (let i = 0; i < allFields.length; i++) {  
+        commentInfo[allFields[i].getAttribute('data-name')] = allFields[i].value       
+    }   
+
+    userName = commentInfo.title;
+    userComment = commentInfo.text; 
+
+    showErrors(allFields);
 
     const isHasError =  document.querySelectorAll('.show-error');
     if (isHasError.length) return;
 
     let currentId = comments.length + 1;
-    const createComment = () => {
-        
-        return {
-            'body': userComment.trim(),
-            'id': currentId,
-            'time': getDate(),
-            'title': userName.trim(),
-        }   
+    
+    const newComment = {
+        'body': userComment.trim(),
+        'id': currentId,
+        'time': getDate(),
+        'title': userName.trim(),
     }
     
-    const newComment = createComment(userName, userComment)
     comments.push(newComment);
 
     renderComments(comments);
@@ -158,18 +165,13 @@ function deletePost(event) {
 }
 
 
-function showErrors(allFields) {
+function showErrors() {
     const allFields = document.getElementsByClassName('field');
-    
-    for (let i = 0; i < allFields.length; i++) {
-        
-        if(allFields[i].value !== ''){   
-            userName = allFields[0].value;
-            userComment = allFields[1].value;       
-            allFields[i].nextElementSibling.classList.remove('show-error');                                         
-        } 
 
-        if(allFields[i].value == '') {
+    for (let i = 0; i < allFields.length; i++) {
+        if(allFields[i].value !== ''){         
+            allFields[i].nextElementSibling.classList.remove('show-error');                                         
+        } else {
             allFields[i].nextElementSibling.classList.add('show-error');   
         }          
     }   
