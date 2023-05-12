@@ -89,7 +89,6 @@ function getComments(){
         .then(responseStatus)
         .then(json)
         .then(function(data){
-            // console.log('data--> ', data)
             comments.push(...data);
             renderComments(comments);
             console.log('comments before', comments) 
@@ -99,8 +98,6 @@ function getComments(){
             console.log('error-->', error)
         })
 }
-
-
 
 function renderComments(renderComments) {
     getCommentSection.innerHTML = '';
@@ -118,65 +115,16 @@ function renderComments(renderComments) {
 
     let  allDeleteButtons = document.getElementsByClassName('delete-comment');
 
-     
-    function deleteWithBtn(){
-        
-        for (let i = 0; i < allDeleteButtons.length; i++) {
-                allDeleteButtons[i].addEventListener("click", function() {
-               
-               let getDataAttribute = document.querySelectorAll('button[data-id]');
-               console.log(getDataAttribute[i]);
-                // allDeleteButtons[i].parentElement.style.display = 'none';
-
-                deletedItemArr = comments.filter(item => item.id !== comments[i].id);
-                console.log('deletedItemArr', deletedItemArr);
-                
-                comments = deletedItemArr;
-                console.log('comments after', comments);
-
-               // getCommentSection.innerHTML = '';
-
-               
-                
-                
-                });
-              
-             
-                
-        }  
-        
-                   
-    }
-
-     deleteWithBtn();
-     
-    }
-    //renderComments(deletedItemArr);
+    for (let i = 0; i < allDeleteButtons.length; i++) {
+        allDeleteButtons[i].addEventListener("click", deletePost);
+    } 
+}
+    
 
 function saveComments() {
-
-    const allFields = document.getElementsByClassName('field');
     let userName = '';
     let userComment = ''; 
 
-    let showErrors = () =>{
-        
-        for (let i = 0; i < allFields.length; i++) {
-            
-            if(allFields[i].value !== ''){   
-                userName = allFields[0].value;
-                userComment = allFields[1].value;       
-                allFields[i].nextElementSibling.classList.remove('show-error');                                         
-            } 
-
-            if(allFields[i].value == '') {
-                allFields[i].nextElementSibling.classList.add('show-error');   
-            }          
-        }   
-         
-        // allFields.value = ''; 
-    
-    }  
     showErrors();
 
     const isHasError =  document.querySelectorAll('.show-error');
@@ -199,6 +147,33 @@ function saveComments() {
     renderComments(comments);
 }   
 
+
+
+function deletePost(event) {
+    let postId = event.target.getAttribute('data-id');
+    let indexInPosts = comments.findIndex((post) => post.id == postId)
+
+     comments.splice(indexInPosts, 1);
+     renderComments(comments);
+}
+
+
+function showErrors(allFields) {
+    const allFields = document.getElementsByClassName('field');
+    
+    for (let i = 0; i < allFields.length; i++) {
+        
+        if(allFields[i].value !== ''){   
+            userName = allFields[0].value;
+            userComment = allFields[1].value;       
+            allFields[i].nextElementSibling.classList.remove('show-error');                                         
+        } 
+
+        if(allFields[i].value == '') {
+            allFields[i].nextElementSibling.classList.add('show-error');   
+        }          
+    }   
+}  
 
 const saveBtn = document.getElementById('comment-save');
 saveBtn.addEventListener('click', saveComments);
