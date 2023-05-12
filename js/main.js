@@ -1,6 +1,7 @@
 let comments = [];
 let allComments = '';
 
+let deletedItemArr = [];
 const getCommentSection = document.getElementById('show-comments');
 const getSearchInput = document.getElementById('search');
 const getArticle = document.getElementsByTagName('article');
@@ -55,14 +56,11 @@ function filteredByDate(){
 } 
 
 function getDate(){
-    // const months = ["January", "February", "March", "April", "May", "June",
-    // "July", "August", "September", "October", "November", "December"]; 
     let myDate = new Date();
     let day = myDate.getDate();
     let months = myDate.getMonth();
     let year = myDate.getFullYear()
-    //let hours = myDate.getHours();
-    //let minute = myDate.getMinutes();
+
     months = ++months;
     if(day < 10){
         day = '0' + day;
@@ -71,15 +69,6 @@ function getDate(){
     if(months < 10){
         months = '0' + months;
     }
-    
-    // if(hours < 10){
-    //     hours = '0' + hours;
-    // }
-    // if(minute < 10){
-    //     minute = '0' + minute;
-    // }
-    
-    //return myDate.getDate() + " " + months[myDate.getMonth()] + ", " + hours + ":" + minute;
     return day + "." + months + "." + year;
 
 }
@@ -101,8 +90,9 @@ function getComments(){
         .then(json)
         .then(function(data){
             // console.log('data--> ', data)
-            comments.push(...data)
+            comments.push(...data);
             renderComments(comments);
+            console.log('comments before', comments) 
             
         })
         .catch(function(error){
@@ -110,10 +100,13 @@ function getComments(){
         })
 }
 
+
+
 function renderComments(renderComments) {
-   
-    for(let i = 0; i < renderComments.length; i++){
+    getCommentSection.innerHTML = '';
     
+    for(let i = 0; i < renderComments.length; i++){
+   
         allComments = `<article>
         <h3 class='titleName'>${renderComments[i].title}</h3>
         <span class='date'>${renderComments[i].time}</span>
@@ -123,19 +116,45 @@ function renderComments(renderComments) {
         getCommentSection.innerHTML += allComments; 
     }
 
-    const allDeleteButtons = document.getElementsByClassName('delete-comment');
-    console.log(allDeleteButtons)
+    let  allDeleteButtons = document.getElementsByClassName('delete-comment');
 
-        for (let i = 0; i < allDeleteButtons.length; i++) {
-            allDeleteButtons[i].addEventListener("click", function() {
-                console.log('asdas')
-            });
+     
+    function deleteWithBtn(){
         
-        }    
+        for (let i = 0; i < allDeleteButtons.length; i++) {
+                allDeleteButtons[i].addEventListener("click", function() {
+               
+               let getDataAttribute = document.querySelectorAll('button[data-id]');
+               console.log(getDataAttribute[i]);
+                // allDeleteButtons[i].parentElement.style.display = 'none';
 
-}
+                deletedItemArr = comments.filter(item => item.id !== comments[i].id);
+                console.log('deletedItemArr', deletedItemArr);
+                
+                comments = deletedItemArr;
+                console.log('comments after', comments);
+
+               // getCommentSection.innerHTML = '';
+
+               
+                
+                
+                });
+              
+             
+                
+        }  
+        
+                   
+    }
+
+     deleteWithBtn();
+     
+    }
+    //renderComments(deletedItemArr);
 
 function saveComments() {
+
     const allFields = document.getElementsByClassName('field');
     let userName = '';
     let userComment = ''; 
@@ -163,18 +182,21 @@ function saveComments() {
     const isHasError =  document.querySelectorAll('.show-error');
     if (isHasError.length) return;
 
+    let currentId = comments.length + 1;
     const createComment = () => {
+        
         return {
-            'title': userName.trim(),
             'body': userComment.trim(),
+            'id': currentId,
             'time': getDate(),
+            'title': userName.trim(),
         }   
     }
-
+    
     const newComment = createComment(userName, userComment)
     comments.push(newComment);
 
-    renderComments(comments)
+    renderComments(comments);
 }   
 
 
