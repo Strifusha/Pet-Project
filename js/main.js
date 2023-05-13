@@ -1,11 +1,9 @@
 let comments = [];
 let allComments = '';
 
-let deletedItemArr = [];
 const getCommentSection = document.getElementById('show-comments');
 const getSearchInput = document.getElementById('search');
 const getArticle = document.getElementsByTagName('article');
-
 
 getSearchInput.addEventListener('keyup', filteredBySearch);
 getComments();
@@ -70,7 +68,6 @@ function getDate(){
         months = '0' + months;
     }
     return day + "." + months + "." + year;
-
 }
 
 function responseStatus(response){
@@ -90,9 +87,7 @@ function getComments(){
         .then(json)
         .then(function(data){
             comments.push(...data);
-            renderComments(comments);
-            console.log('comments before', comments) 
-            
+            renderComments(comments);           
         })
         .catch(function(error){
             console.log('error-->', error)
@@ -120,26 +115,21 @@ function renderComments(renderComments) {
     } 
 }
     
-
-function saveComments() {
-    let userName = '';
-    let userComment = ''; 
-    
+function saveComments() {    
     const allFields = document.getElementsByClassName('field');
     let commentInfo = {}
 
     for (let i = 0; i < allFields.length; i++) {  
-        commentInfo[allFields[i].getAttribute('data-name')] = allFields[i].value       
-    }   
-
-    userName = commentInfo.title;
-    userComment = commentInfo.text; 
+        commentInfo[allFields[i].getAttribute('data-name')] = allFields[i].value;         
+    } 
+    let userName = commentInfo.title;
+    let userComment = commentInfo.text;    
 
     showErrors(allFields);
 
     const isHasError =  document.querySelectorAll('.show-error');
     if (isHasError.length) return;
-
+    
     let currentId = comments.length + 1;
     
     const newComment = {
@@ -148,13 +138,11 @@ function saveComments() {
         'time': getDate(),
         'title': userName.trim(),
     }
-    
     comments.push(newComment);
-
-    renderComments(comments);
+    renderComments(comments); 
+    allFields[0].value = '';
+    allFields[1].value = '';
 }   
-
-
 
 function deletePost(event) {
     let postId = event.target.getAttribute('data-id');
@@ -163,7 +151,6 @@ function deletePost(event) {
      comments.splice(indexInPosts, 1);
      renderComments(comments);
 }
-
 
 function showErrors() {
     const allFields = document.getElementsByClassName('field');
